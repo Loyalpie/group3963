@@ -34,28 +34,48 @@ int CountNumbers(int[] array)
 }
 
 //сортировка методом пузырька (самый большой элемент поднимается наверх)
-int[] BubbleSort(int[] array)
+void BubbleSort(int[] array)
 {
-    int[] sortArray = array;
-
-    for (int j = 1; j < sortArray.Length; j++)
+    for (int j = 1; j < array.Length; j++)
     {
-        for (int i = 0; i < sortArray.Length - 1; i++)
+        for (int i = 0; i < array.Length - 1; i++)
         {
-            if (sortArray[i] > sortArray[i + 1])
+            if (array[i] > array[i + 1])
             {
-                int temp = sortArray[i];
-                sortArray[i] = sortArray[i + 1];
-                sortArray[i + 1] = temp;
+                int temp = array[i];
+                array[i] = array[i + 1];
+                array[i + 1] = temp;
             }
         }
-
     }
-    return sortArray;
 }
 
-int[] array = GenArray(100, 100, 999);
-Print1DArray(array);
-Console.WriteLine(CountNumbers(array));
-int[] sortArray1 = BubbleSort(array);
-Print1DArray(sortArray1);
+//сортировка методом подсчета 
+void CountSort(int[] array)
+{
+    int max = array.Max();
+    int min = array.Min();
+
+    int[] count = new int[max - min + 1];
+    int z = 0;
+    for (int i = 0; i < count.Length; i++) count[i] = 0;
+    for (int i = 0; i < array.Length; i++) count[array[i] - min]++;
+
+    for (int i = min; i <= max; i++) while (count[i - min]-- > 0)
+        {
+            array[z] = i;
+            z++;
+        }
+}
+
+int[] array1 = GenArray(123, 100, 999);
+int[] array2 = array1;
+Print1DArray(array1);
+
+Console.WriteLine("Четных чисел в массиве: " + CountNumbers(array1));
+
+BubbleSort(array1);
+Print1DArray(array1);
+
+CountSort(array2);
+Print1DArray(array2);

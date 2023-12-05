@@ -1,55 +1,51 @@
 ﻿// Задайте массив вещественных чисел. Найдите разницу между максимальным и минимальным элементов массива.
 
 //метод генерации массива
-int[] GenArray(int number, int min, int max)
+double[] GenArray(int number, int min, int max)
 {
-    Random random = new Random(); //генерация случайных чисел в массиве
-    int[] array = new int[number]; //создание массива с number-количеством элементов
+    double[] array = new double[number]; //создание массива с number-количеством элементов
 
     //заполнение массива
     for (int i = 0; i < array.Length; i++)
     {
-        array[i] = random.Next(min, max + 1); //заполнение случайными числами от min до max
+        array[i] = new Random().Next(min, max + 1) + (new Random().NextDouble()); //заполнение случайными числами от min до max
+        array[i] = Math.Round(array[i], 2); //округление до 2 чисел после запятой
     }
     return array; //возвращение массива
 }
 
 //метод "рисования" одномерного массива
-void Print1DArray(int[] array)
+void Print1DArray(double[] array)
 {
     Console.Write("[");
     for (int i = 0; i < array.Length - 1; i++)
     {
-        Console.Write(array[i] + ", ");
+        Console.Write(array[i] + "; ");
     }
     Console.WriteLine(array[array.Length - 1] + "]");
 }
 
 //сортировка методом пузырька (самый большой элемент поднимается наверх)
-int[] BubbleSort(int[] array)
+void BubbleSort(double[] array)
 {
-    int[] sortArray = array;
-
-    for (int j = 1; j < sortArray.Length; j++)
+    for (int j = 1; j < array.Length; j++)
     {
-        for (int i = 0; i < sortArray.Length - 1; i++)
+        for (int i = 0; i < array.Length - 1; i++)
         {
-            if (sortArray[i] > sortArray[i + 1])
+            if (array[i] > array[i + 1])
             {
-                int temp = sortArray[i];
-                sortArray[i] = sortArray[i + 1];
-                sortArray[i + 1] = temp;
+                double temp = array[i];
+                array[i] = array[i + 1];
+                array[i + 1] = temp;
             }
         }
-
     }
-    return sortArray;
 }
 
-int[] array = GenArray(10, -10, 10);
+double[] array = GenArray(123, -10, 10);
 Print1DArray(array);
 
-int[] sortArray = BubbleSort(array);
-Print1DArray(sortArray);
+BubbleSort(array);
+Print1DArray(array);
 
-Console.WriteLine(sortArray[sortArray.Length-1] - sortArray[0]);
+Console.WriteLine("Разница между минимальным и максимальным значением равна " + (array[array.Length - 1] - array[0]));
